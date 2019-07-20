@@ -6,17 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/anxo/test/compress.h
+/home/anxo/compress-decompress/compress.h
 
-/home/anxo/test/decompress.h
+/home/anxo/compress-decompress/decompress.h
 
-/home/anxo/test/main.c
+/home/anxo/compress-decompress/main.c
 stdio.h
 -
 stdlib.h
 -
 compress.h
-/home/anxo/test/compress.h
+/home/anxo/compress-decompress/compress.h
 decompress.h
-/home/anxo/test/decompress.h
+/home/anxo/compress-decompress/decompress.h
 

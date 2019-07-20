@@ -6,19 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/anxo/test/compress.c
+/home/anxo/compress-decompress/compress.c
 
-/home/anxo/test/compress.h
+/home/anxo/compress-decompress/compress.h
 
-/home/anxo/test/decompress.c
+/home/anxo/compress-decompress/decompress.c
 
-/home/anxo/test/decompress.h
+/home/anxo/compress-decompress/decompress.h
 
-/home/anxo/test/main.c
+/home/anxo/compress-decompress/main.c
 compress.h
-/home/anxo/test/compress.h
+/home/anxo/compress-decompress/compress.h
 decompress.h
-/home/anxo/test/decompress.h
+/home/anxo/compress-decompress/decompress.h
 stdio.h
 -
 

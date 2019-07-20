@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/anxo/test
+CMAKE_SOURCE_DIR = /home/anxo/compress-decompress
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/anxo/test
+CMAKE_BINARY_DIR = /home/anxo/compress-decompress
 
 # Include any dependencies generated for this target.
 include CMakeFiles/compress-decompress.dir/depend.make
@@ -59,42 +59,42 @@ include CMakeFiles/compress-decompress.dir/flags.make
 
 CMakeFiles/compress-decompress.dir/main.c.o: CMakeFiles/compress-decompress.dir/flags.make
 CMakeFiles/compress-decompress.dir/main.c.o: main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anxo/test/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/compress-decompress.dir/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/compress-decompress.dir/main.c.o   -c /home/anxo/test/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anxo/compress-decompress/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/compress-decompress.dir/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/compress-decompress.dir/main.c.o   -c /home/anxo/compress-decompress/main.c
 
 CMakeFiles/compress-decompress.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/compress-decompress.dir/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/anxo/test/main.c > CMakeFiles/compress-decompress.dir/main.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/anxo/compress-decompress/main.c > CMakeFiles/compress-decompress.dir/main.c.i
 
 CMakeFiles/compress-decompress.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/compress-decompress.dir/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/anxo/test/main.c -o CMakeFiles/compress-decompress.dir/main.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/anxo/compress-decompress/main.c -o CMakeFiles/compress-decompress.dir/main.c.s
 
 CMakeFiles/compress-decompress.dir/compress.c.o: CMakeFiles/compress-decompress.dir/flags.make
 CMakeFiles/compress-decompress.dir/compress.c.o: compress.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anxo/test/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/compress-decompress.dir/compress.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/compress-decompress.dir/compress.c.o   -c /home/anxo/test/compress.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anxo/compress-decompress/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/compress-decompress.dir/compress.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/compress-decompress.dir/compress.c.o   -c /home/anxo/compress-decompress/compress.c
 
 CMakeFiles/compress-decompress.dir/compress.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/compress-decompress.dir/compress.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/anxo/test/compress.c > CMakeFiles/compress-decompress.dir/compress.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/anxo/compress-decompress/compress.c > CMakeFiles/compress-decompress.dir/compress.c.i
 
 CMakeFiles/compress-decompress.dir/compress.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/compress-decompress.dir/compress.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/anxo/test/compress.c -o CMakeFiles/compress-decompress.dir/compress.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/anxo/compress-decompress/compress.c -o CMakeFiles/compress-decompress.dir/compress.c.s
 
 CMakeFiles/compress-decompress.dir/decompress.c.o: CMakeFiles/compress-decompress.dir/flags.make
 CMakeFiles/compress-decompress.dir/decompress.c.o: decompress.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anxo/test/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/compress-decompress.dir/decompress.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/compress-decompress.dir/decompress.c.o   -c /home/anxo/test/decompress.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anxo/compress-decompress/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/compress-decompress.dir/decompress.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/compress-decompress.dir/decompress.c.o   -c /home/anxo/compress-decompress/decompress.c
 
 CMakeFiles/compress-decompress.dir/decompress.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/compress-decompress.dir/decompress.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/anxo/test/decompress.c > CMakeFiles/compress-decompress.dir/decompress.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/anxo/compress-decompress/decompress.c > CMakeFiles/compress-decompress.dir/decompress.c.i
 
 CMakeFiles/compress-decompress.dir/decompress.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/compress-decompress.dir/decompress.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/anxo/test/decompress.c -o CMakeFiles/compress-decompress.dir/decompress.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/anxo/compress-decompress/decompress.c -o CMakeFiles/compress-decompress.dir/decompress.c.s
 
 # Object files for target compress-decompress
 compress__decompress_OBJECTS = \
@@ -110,7 +110,7 @@ compress-decompress: CMakeFiles/compress-decompress.dir/compress.c.o
 compress-decompress: CMakeFiles/compress-decompress.dir/decompress.c.o
 compress-decompress: CMakeFiles/compress-decompress.dir/build.make
 compress-decompress: CMakeFiles/compress-decompress.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/anxo/test/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable compress-decompress"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/anxo/compress-decompress/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable compress-decompress"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/compress-decompress.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -123,6 +123,6 @@ CMakeFiles/compress-decompress.dir/clean:
 .PHONY : CMakeFiles/compress-decompress.dir/clean
 
 CMakeFiles/compress-decompress.dir/depend:
-	cd /home/anxo/test && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/anxo/test /home/anxo/test /home/anxo/test /home/anxo/test /home/anxo/test/CMakeFiles/compress-decompress.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/anxo/compress-decompress && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/anxo/compress-decompress /home/anxo/compress-decompress /home/anxo/compress-decompress /home/anxo/compress-decompress /home/anxo/compress-decompress/CMakeFiles/compress-decompress.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/compress-decompress.dir/depend
 

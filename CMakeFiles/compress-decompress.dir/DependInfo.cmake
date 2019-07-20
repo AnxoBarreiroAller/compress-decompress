@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/anxo/test/compress.c" "/home/anxo/test/CMakeFiles/compress-decompress.dir/compress.c.o"
-  "/home/anxo/test/decompress.c" "/home/anxo/test/CMakeFiles/compress-decompress.dir/decompress.c.o"
-  "/home/anxo/test/main.c" "/home/anxo/test/CMakeFiles/compress-decompress.dir/main.c.o"
+  "/home/anxo/compress-decompress/compress.c" "/home/anxo/compress-decompress/CMakeFiles/compress-decompress.dir/compress.c.o"
+  "/home/anxo/compress-decompress/decompress.c" "/home/anxo/compress-decompress/CMakeFiles/compress-decompress.dir/decompress.c.o"
+  "/home/anxo/compress-decompress/main.c" "/home/anxo/compress-decompress/CMakeFiles/compress-decompress.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

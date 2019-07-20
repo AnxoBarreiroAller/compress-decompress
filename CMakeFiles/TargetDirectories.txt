@@ -1,0 +1,3 @@
+/home/anxo/test/CMakeFiles/rebuild_cache.dir
+/home/anxo/test/CMakeFiles/compress_decompress.dir
+/home/anxo/test/CMakeFiles/edit_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -rdynamic CMakeFiles/compress-decompress.dir/main.c.o CMakeFiles/compress-decompress.dir/compress.c.o CMakeFiles/compress-decompress.dir/decompress.c.o  -o compress-decompress 

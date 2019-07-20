@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/anxo/test/compress.c
+
+/home/anxo/test/compress.h
+
+/home/anxo/test/decompress.c
+
+/home/anxo/test/decompress.h
+
+/home/anxo/test/main.c
+compress.h
+/home/anxo/test/compress.h
+decompress.h
+/home/anxo/test/decompress.h
+stdio.h
+-
+

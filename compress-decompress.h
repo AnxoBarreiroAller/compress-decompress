@@ -9,7 +9,8 @@ typedef enum
     NONE = 0,
     COMPRESS,
     ACCESS_COMPRESS,
-    DECOMPRESS
+    DECOMPRESS,
+    TESTING
 }functionality_t;
 /*------------------------------*
         Method declaration 

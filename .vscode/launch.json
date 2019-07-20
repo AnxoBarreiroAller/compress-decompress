@@ -13,7 +13,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {
@@ -29,11 +29,11 @@
         "type": "cppdbg",
         "request": "launch",
         "program": "${workspaceRoot}/Debug/compress_decompress",
-        "args": ["caca"],
+        "args": ["-h"],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
         "environment": [],
-        "externalConsole": true,
+        "externalConsole": false,
         "MIMode": "gdb",
         "setupCommands": [
             {

@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/compress_decompress.dir/main.c.o"
   "CMakeFiles/compress_decompress.dir/compress.c.o"
   "CMakeFiles/compress_decompress.dir/decompress.c.o"
+  "CMakeFiles/compress_decompress.dir/common.c.o"
   "compress_decompress.pdb"
   "compress_decompress"
 )

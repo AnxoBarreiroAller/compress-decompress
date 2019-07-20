@@ -123,6 +123,33 @@ compress_decompress/fast:
 	$(MAKE) -f CMakeFiles/compress_decompress.dir/build.make CMakeFiles/compress_decompress.dir/build
 .PHONY : compress_decompress/fast
 
+common.o: common.c.o
+
+.PHONY : common.o
+
+# target to build an object file
+common.c.o:
+	$(MAKE) -f CMakeFiles/compress_decompress.dir/build.make CMakeFiles/compress_decompress.dir/common.c.o
+.PHONY : common.c.o
+
+common.i: common.c.i
+
+.PHONY : common.i
+
+# target to preprocess a source file
+common.c.i:
+	$(MAKE) -f CMakeFiles/compress_decompress.dir/build.make CMakeFiles/compress_decompress.dir/common.c.i
+.PHONY : common.c.i
+
+common.s: common.c.s
+
+.PHONY : common.s
+
+# target to generate assembly for a file
+common.c.s:
+	$(MAKE) -f CMakeFiles/compress_decompress.dir/build.make CMakeFiles/compress_decompress.dir/common.c.s
+.PHONY : common.c.s
+
 compress.o: compress.c.o
 
 .PHONY : compress.o
@@ -213,6 +240,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... compress_decompress"
 	@echo "... edit_cache"
+	@echo "... common.o"
+	@echo "... common.i"
+	@echo "... common.s"
 	@echo "... compress.o"
 	@echo "... compress.i"
 	@echo "... compress.s"

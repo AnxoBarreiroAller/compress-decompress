@@ -12,6 +12,7 @@ void cda_processCompress(char *input, char *output)
     long size;
     compressedSize_t compressionSize;
     BYTE *data;
+    BYTE *outputData; 
     uint8_t *translatedData;
     
     cda_getFileSize(input, size);
@@ -30,25 +31,28 @@ void cda_processCompress(char *input, char *output)
     else if (g_alphabetTableSize < 5U ){compressionSize = TWO_BIT;}
     else if (g_alphabetTableSize < 9U ){compressionSize = THREE_BIT;}
     else if (g_alphabetTableSize < 17U){compressionSize = FOUR_BIT;}
+    
     // The outputSize represents the length in bytes of the output file, 4 bits for the tableSize
     //  tableSize bytes for the index table reference and (compresionSize * size)/(8) bytes for the actual compressed data
-    long outputSize = 1U + g_alphabetTableSize + ceil(((uint8_t)(compressionSize) +1U)*size/8);
-    BYTE *outputData;
+
+
+    long outputSize = 1U  + ceil(((uint8_t)(compressionSize) +1U)*size/8);
+    
     outputData= (BYTE*)malloc(outputSize * sizeof(BYTE));
     
     switch (compressionSize)
     {
     case ONE_BIT:
-        cda_oneBitCompression(size,g_alphabetTable,g_alphabetTableSize,translatedData,outputData);
+        cda_oneBitCompression(size,g_alphabetTable,g_alphabetTableSize,translatedData,output);
         break;
     case TWO_BIT:
-        cda_twoBitCompression(size,g_alphabetTable,g_alphabetTableSize,translatedData,outputData);
+        cda_twoBitCompression(size,g_alphabetTable,g_alphabetTableSize,translatedData,output);
         break;
     case THREE_BIT:
-        cda_threeBitCompression(size,g_alphabetTable,g_alphabetTableSize,translatedData,outputData);
+        cda_threeBitCompression(size,g_alphabetTable,g_alphabetTableSize,translatedData,output);
         break;
     case FOUR_BIT:
-        cda_fourBitCompression(size,g_alphabetTable,g_alphabetTableSize,translatedData,outputData);
+        cda_fourBitCompression(size,g_alphabetTable,g_alphabetTableSize,translatedData,output);
         break;
     
     default:
@@ -108,26 +112,222 @@ static void cda_errorMaxAlphElements(long num, long size)
 }
 
 
-static void cda_oneBitCompression(long size,BYTE* i_alphabetTable,uint8_t g_alphabetTableSize, uint8_t *translatedData, BYTE* outputData)
+static void cda_oneBitCompression(long size,BYTE* i_alphabetTable,uint8_t alphabetTableSize, uint8_t *translatedData, char* outputData)
 {
+    FILE *outfile =fopen(outputData,"wb");
+    cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
+
+    uint8_t buffer =0;
+    uint16_t number;
+
+    for (long i = 0; i < size; i++)
+    {
+        
+        number += translatedData[i];
+        
+        number<<1;
+        buffer++;
+
+        if (buffer == 8|| i >= size-1U)
+        {
+            char c = number + '0';
+            long l = strtol(&c, 0, 2);
+            BYTE b = l & 0xffl;
+            fwrite(&b, 1, 1, outfile);
+            number = 0;
+            buffer = 0;
+        }
+        
+    }
+    
+    fclose(outfile);
+    exit(EXIT_SUCCESS);
 
 }
 
-static void cda_twoBitCompression(long size,BYTE* i_alphabetTable,uint8_t g_alphabetTableSize, uint8_t *translatedData, BYTE* outputData)
+static void cda_twoBitCompression(long size,BYTE* i_alphabetTable,uint8_t alphabetTableSize, uint8_t *translatedData, char* outputData)
 {
+    FILE *outfile =fopen(outputData,"wb");
+    cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
+    uint8_t buffer =0;
+    uint16_t number;
+    for (long i = 0; i < size; i++)
+    {
+        number += translatedData[i];
+        
+        
+        number<<2;
+        buffer++;
+
+        if (buffer == 4 || i >= size-1U)
+        {
+            char c = number + '0';
+            long l = strtol(&c, 0, 2);
+            BYTE b = l & 0xffl;
+            fwrite(&b, 1, 1, outfile);
+            number = 0;
+            buffer = 0;
+        }
+        
+    }
+    
+    fclose(outfile);
+    exit(EXIT_SUCCESS);
 
 }
 
-static void cda_threeBitCompression(long size,BYTE* i_alphabetTable,uint8_t g_alphabetTableSize, uint8_t *translatedData, BYTE* outputData)
+static void cda_threeBitCompression(long size,BYTE* i_alphabetTable,uint8_t alphabetTableSize, uint8_t *translatedData, char* outputData)
 {
+    FILE *outfile =fopen(outputData,"wb");
+    cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
+    
+    uint8_t buffer =0;
+    uint16_t number;
+    uint16_t leftover = 0;
+    uint8_t leftoverSize =0;
 
+    for (long i = 0; i < size; i++)
+    {
+        if(leftoverSize!=0)
+        {
+            uint8_t localSize =leftoverSize;
+            for(uint8_t k =0; k<localSize;k++)
+            {
+                if(leftover & 1)
+                {
+                    number++;
+                    number<<1;
+                    leftover >>1;
+                    leftoverSize--;
+                    buffer++;
+                    if(buffer == 8U)break;
+                }
+                else
+                {
+                    leftover >>1;
+                    number<<1;
+                    buffer++;
+                    leftoverSize--;
+                    if(buffer == 8U)break;
+                }
+                
+            }
+        }
+        if(buffer < 8U)
+        {
+            uint8_t localValue = translatedData[i];
+            for(uint8_t j=0; j <3U;j++)
+            {
+                
+                if(localValue & 1)
+                {
+                    number++;
+                    number<<1;
+                    localValue >>1;
+                    buffer++;
+                    if(buffer == 8U)
+                    {
+                        if(j<2)
+                        {
+                            leftover = localValue;
+                            leftoverSize = 2U-j;
+                        }
+                        break;
+                    }
+                }
+                else
+                {
+                    localValue >>1;
+                    number<<1;
+                    buffer++;
+                    if(buffer == 8U)
+                    {
+                        if(j<2)
+                        {
+                            leftover = localValue;
+                            leftoverSize = 2U-j;
+                        }
+                        break;
+                    }
+                }
+                
+            }
+        }
+
+        if (buffer == 8U || i >= size-1U)
+        {
+            char c = number + '0';
+            long l = strtol(&c, 0, 2);
+            BYTE b = l & 0xffl;
+            fwrite(&b, 1, 1, outfile);
+            number = 0;
+            buffer = 0;
+        }
+        
+    }
+    
+    fclose(outfile);
+    exit(EXIT_SUCCESS);
 }
 
-static void cda_fourBitCompression(long size,BYTE* i_alphabetTable, uint8_t g_alphabetTableSize, uint8_t *translatedData, BYTE* outputData)
+static void cda_fourBitCompression(long size,BYTE* i_alphabetTable, uint8_t alphabetTableSize, uint8_t *translatedData, char* outputData)
 {
+    FILE *outfile =fopen(outputData,"wb");
+    cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
+    
+    uint8_t buffer =0;
+    uint16_t number;
+    uint16_t leftover = 0;
+    uint8_t leftoverSize =0;
 
+    for (long i = 0; i < size; i++)
+    {
+        if(leftoverSize!=0)
+        {
+
+        }
+        for(uint8_t j=0; j <3U;j++)
+        {
+            if(buffer < 8U)
+            {
+
+            }
+            else
+            {
+                /* code */
+            }
+            
+        }
+
+        if (buffer == 8U || i >= size-1U)
+        {
+            char c = number + '0';
+            long l = strtol(&c, 0, 2);
+            BYTE b = l & 0xffl;
+            fwrite(&b, 1, 1, outfile);
+            number = 0;
+            buffer = 0;
+        }
+        
+    }
+    
+    fclose(outfile);
+    exit(EXIT_SUCCESS);
 }
 
 
 
+static void cda_headerWrite(BYTE* i_alphabetTable, uint8_t alphabetTableSize,  FILE* outfile)
+{
+    
+    char c = alphabetTableSize + '0';
+    long l = strtol(&c, 0, 2);
+    unsigned char b = l & 0xffl;
+    fwrite(&b, 1, 1, outfile);
+
+    for (uint8_t i = 0; i < alphabetTableSize; i++)
+    {
+        fwrite(&i_alphabetTable[i], 1, 1, outfile);
+    }
+}
     

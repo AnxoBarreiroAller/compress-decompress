@@ -24,6 +24,6 @@ void cda_readFile(char* file_p, long i_size, BYTE* o_data_p)
     }
     else 
     { 
-        fread((BYTE*)o_data_p,sizeof(BYTE),i_size,logFile); 
+        fread((BYTE*)o_data_p,1,i_size,logFile); 
     }
 }

@@ -4,6 +4,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 set(CMAKE_CXX_FLAGS "-std=c99")
 
 PROJECT(compress_decompress)
-set (SOURCE main.c compress.c decompress.c)
+set (SOURCE main.c compress.c decompress.c common.c)
  
 add_executable (${PROJECT_NAME} ${SOURCE})

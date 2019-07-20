@@ -93,11 +93,11 @@ int main (int argc, char* argv[])
         break;
     case COMPRESS:
         fprintf(stderr," Compression selected \n");
-        cda_processCompress();
+        cda_processCompress(input,output);
         break;
     case DECOMPRESS:
         fprintf(stderr," Decompression selected \n");
-        cda_processDecompress();
+        cda_processDecompress(input,output);
         break;
      case ACCESS_COMPRESS:
         fprintf(stderr," Access compressed file feature not implemented yet selected \n");

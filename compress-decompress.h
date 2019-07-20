@@ -6,7 +6,7 @@
     Struct, Enums and defines declaration 
 ----------------------------------------------*/
 #define BYTE unsigned char
-#define MAX_ALPAHBET_ELEMTS 16U
+#define MAX_ALPHABET_ELEMENTS 16U
 
 typedef enum
 {

@@ -8,11 +8,7 @@
 
 /home/anxo/compress-decompress/compress-decompress.h
 
-/home/anxo/compress-decompress/compress.h
-
-/home/anxo/compress-decompress/decompress.h
-
-/home/anxo/compress-decompress/main.c
+/home/anxo/compress-decompress/compress.c
 stdio.h
 -
 stdlib.h
@@ -21,10 +17,14 @@ stdint.h
 -
 string.h
 -
+stdbool.h
+-
+math.h
+-
 compress.h
 /home/anxo/compress-decompress/compress.h
-decompress.h
-/home/anxo/compress-decompress/decompress.h
+
+/home/anxo/compress-decompress/compress.h
 compress-decompress.h
 /home/anxo/compress-decompress/compress-decompress.h
 

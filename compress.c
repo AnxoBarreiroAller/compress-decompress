@@ -12,7 +12,6 @@ void cda_processCompress(char *input, char *output)
     long size;
     compressedSize_t compressionSize;
     BYTE *data;
-    BYTE *outputData; 
     uint8_t *translatedData;
     
     cda_getFileSize(input, size);
@@ -36,9 +35,6 @@ void cda_processCompress(char *input, char *output)
     //  tableSize bytes for the index table reference and (compresionSize * size)/(8) bytes for the actual compressed data
 
 
-    long outputSize = 1U  + ceil(((uint8_t)(compressionSize) +1U)*size/8);
-    
-    outputData= (BYTE*)malloc(outputSize * sizeof(BYTE));
     
     switch (compressionSize)
     {
@@ -64,7 +60,7 @@ void cda_processCompress(char *input, char *output)
 
     free(data);
     free(translatedData);
-    free(outputData);
+
 
 }
 
@@ -157,7 +153,7 @@ static void cda_twoBitCompression(long size,BYTE* i_alphabetTable,uint8_t alphab
         
         
         number<<2;
-        buffer++;
+        buffer +=2U;
 
         if (buffer == 4 || i >= size-1U)
         {
@@ -282,22 +278,12 @@ static void cda_fourBitCompression(long size,BYTE* i_alphabetTable, uint8_t alph
 
     for (long i = 0; i < size; i++)
     {
-        if(leftoverSize!=0)
-        {
+        number += translatedData[i];
+        
+        
+        number<<4;
+        buffer +=4U;
 
-        }
-        for(uint8_t j=0; j <3U;j++)
-        {
-            if(buffer < 8U)
-            {
-
-            }
-            else
-            {
-                /* code */
-            }
-            
-        }
 
         if (buffer == 8U || i >= size-1U)
         {

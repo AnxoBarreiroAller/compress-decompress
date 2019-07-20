@@ -28,9 +28,33 @@ typedef enum
 /*------------------------------*
         Method declaration 
 --------------------------------*/
+/*
+*  fn        cvoid cda_printHelp();
+*
+*  brief     Prints Usage and help
+*
+*/
 void cda_printHelp();
-
+/*
+*  fn        cda_getFileSize(char* file_p, long* o_size)
+*
+*  brief     calculates the total file length
+*
+*  param [input]  file_p     file name
+*
+*  param [output]  o_size    file size.
+*/
 void cda_getFileSize(char* file_p, long* o_size);
+
+/*
+*  fn        cda_readFile(char* file_p, long i_size, BYTE* o_data_p);
+*
+*  brief     calculates the total file length
+*
+*  param [input]  file_p     file name
+*
+*  param [output]  o_size    file size.
+*/
 void cda_readFile(char* file_p, long i_size, BYTE* o_data_p);
 
 #endif

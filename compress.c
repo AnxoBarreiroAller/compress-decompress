@@ -9,11 +9,13 @@
 
 void cda_processCompress(char *input, char *output)
 {
+
+    //Local Vars
     long size;
-    compressedSize_t compressionSize;
+    compressedSize_t compressionType;
     BYTE *data;
     uint8_t *translatedData;
-    
+    // Get the total file size
     cda_getFileSize(input, &size);
 
     
@@ -26,27 +28,27 @@ void cda_processCompress(char *input, char *output)
 
     cda_createAlphabetTable(data,size, g_alphabetTable, &g_alphabetTableSize, translatedData);
     // get the correct memory size to be used in order to maximize compression
-    if(g_alphabetTableSize < 3U)       {compressionSize = ONE_BIT;}
-    else if (g_alphabetTableSize < 5U ){compressionSize = TWO_BIT;}
-    else if (g_alphabetTableSize < 9U ){compressionSize = THREE_BIT;}
-    else if (g_alphabetTableSize < 17U){compressionSize = FOUR_BIT;}
+    if(g_alphabetTableSize < 3U)       {compressionType = ONE_BIT;}
+    else if (g_alphabetTableSize < 5U ){compressionType = TWO_BIT;}
+    else if (g_alphabetTableSize < 9U ){compressionType = THREE_BIT;}
+    else if (g_alphabetTableSize < 17U){compressionType = FOUR_BIT;}
     
 
 
     //Select the correct compression Algorithm
-    switch (compressionSize)
+    switch (compressionType)
     {
     case ONE_BIT:
-        cda_oneBitCompression(size,g_alphabetTable,&g_alphabetTableSize,translatedData,output);
+        cda_bitCompression(size,g_alphabetTable,&g_alphabetTableSize,translatedData,output,1U);
         break;
     case TWO_BIT:
-        cda_twoBitCompression(size,g_alphabetTable,&g_alphabetTableSize,translatedData,output);
+        cda_bitCompression(size,g_alphabetTable,&g_alphabetTableSize,translatedData,output,2U);
         break;
     case THREE_BIT:
-        cda_threeBitCompression(size,g_alphabetTable,&g_alphabetTableSize,translatedData,output);
+        cda_bitCompression(size,g_alphabetTable,&g_alphabetTableSize,translatedData,output,3U);
         break;
     case FOUR_BIT:
-        cda_fourBitCompression(size,g_alphabetTable,&g_alphabetTableSize,translatedData,output);
+        cda_bitCompression(size,g_alphabetTable,&g_alphabetTableSize,translatedData,output,4U);
         break;
     
     default:
@@ -64,18 +66,18 @@ void cda_processCompress(char *input, char *output)
 }
 
 
-static void cda_createAlphabetTable(BYTE* i_data_p,long dataSize, BYTE* o_table, uint8_t* o_tableSize, uint8_t* o_translatedData_p)
+static void cda_createAlphabetTable(BYTE* i_data_p,long dataSize, BYTE* o_table, uint8_t* o_alphabetTableSize, uint8_t* o_translatedData_p)
 {
     //Init table Size.
     o_table[0] = i_data_p[0];
-    *o_tableSize = 1U;
+    *o_alphabetTableSize = 1U;
     o_translatedData_p[0] = 0U;
 
     for (long i = 1; i < dataSize; i++) // Go thorough all file elements
     {
         bool newItem = true;
         uint8_t item = 0;
-        for (uint8_t j = 0; j < *o_tableSize; j++)
+        for (uint8_t j = 0; j < *o_alphabetTableSize; j++)
         {
             if(i_data_p[i] == o_table[j])// Check if it is a new element
             {
@@ -86,10 +88,10 @@ static void cda_createAlphabetTable(BYTE* i_data_p,long dataSize, BYTE* o_table,
 
         if(newItem)
         {
-            o_table[*o_tableSize] = i_data_p[i];
-            o_translatedData_p[i] = *o_tableSize; 
-            ++ (*o_tableSize);
-            if(*o_tableSize >= MAX_ALPHABET_ELEMENTS)cda_errorMaxAlphElements(i, dataSize);
+            o_table[*o_alphabetTableSize] = i_data_p[i];
+            o_translatedData_p[i] = *o_alphabetTableSize; 
+            ++ (*o_alphabetTableSize);
+            if(*o_alphabetTableSize >= MAX_ALPHABET_ELEMENTS)cda_errorMaxAlphElements(i, dataSize);
         }
         else
         {
@@ -106,65 +108,7 @@ static void cda_errorMaxAlphElements(long num, long size)
 
 }
 
-
-static void cda_oneBitCompression(long size,BYTE* i_alphabetTable,uint8_t* alphabetTableSize, uint8_t *translatedData, char* outputData)
-{
-    FILE *outfile =fopen(outputData,"wb");
-    cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
-
-    uint8_t buffer =0;
-    int number=0;
-
-    for (long i = 0; i < size; i++)
-    {
-        
-        
-        if(number!=0)number =number<<1;
-        number += translatedData[i];
-        buffer++;
-
-        if (buffer == 8|| i >= size-1U)
-        {
-            cda_write2binary(number,outfile);
-            number = 0;
-            buffer = 0;
-        }
-        
-    }
-    
-    fclose(outfile);
-    
-}
-
-static void cda_twoBitCompression(long size,BYTE* i_alphabetTable,uint8_t* alphabetTableSize, uint8_t *translatedData, char* outputData)
-{
-    FILE *outfile =fopen(outputData,"wb");
-    cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
-    uint8_t buffer = 0;
-    int number = 0;
-    for (long i = 0; i < size; i++)
-    {
-        
-        
-        
-        if(number!=0)number =number<<2;
-        number += translatedData[i];
-        buffer +=2U;
-
-        if (buffer == 4 || i >= size-1U)
-        {
-            cda_write2binary(number,outfile);
-            number = 0;
-            buffer = 0;
-        }
-        
-    }
-    
-    fclose(outfile);
-    
-}
-
-static void cda_threeBitCompression(long size,BYTE* i_alphabetTable,uint8_t* alphabetTableSize, uint8_t *translatedData, char* outputData)
+static void cda_bitCompression(long size,BYTE* i_alphabetTable,uint8_t* alphabetTableSize, uint8_t *translatedData, char* outputData,uint8_t biteCompressSize)
 {
     FILE *outfile =fopen(outputData,"wb");
     cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
@@ -202,10 +146,11 @@ static void cda_threeBitCompression(long size,BYTE* i_alphabetTable,uint8_t* alp
                 
             }
         }
+
         if(buffer < 8U)
         {
             uint8_t localValue = translatedData[i];
-            for(uint8_t j=0; j <3U;j++)
+            for(uint8_t j=0; j <biteCompressSize;j++)
             {
                 
                 if(localValue & 1)
@@ -216,10 +161,10 @@ static void cda_threeBitCompression(long size,BYTE* i_alphabetTable,uint8_t* alp
                     buffer++;
                     if(buffer == 8U)
                     {
-                        if(j<2)
+                        if(j<biteCompressSize-1U)
                         {
                             leftover = localValue;
-                            leftoverSize = 2U-j;
+                            leftoverSize = (biteCompressSize-1U)-j;
                         }
                         break;
                     }
@@ -231,10 +176,10 @@ static void cda_threeBitCompression(long size,BYTE* i_alphabetTable,uint8_t* alp
                     buffer++;
                     if(buffer == 8U)
                     {
-                        if(j<2)
+                        if(j<biteCompressSize-1U)
                         {
                             leftover = localValue;
-                            leftoverSize = 2U-j;
+                            leftoverSize = (biteCompressSize-1U)-j;
                         }
                         break;
                     }
@@ -255,40 +200,6 @@ static void cda_threeBitCompression(long size,BYTE* i_alphabetTable,uint8_t* alp
     fclose(outfile);
    
 }
-
-static void cda_fourBitCompression(long size,BYTE* i_alphabetTable, uint8_t* alphabetTableSize, uint8_t *translatedData, char* outputData)
-{
-    FILE *outfile =fopen(outputData,"wb");
-    // create the size and index for our data structure.
-    cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
-    
-    //local Vars
-    uint8_t buffer =0;
-    int number =0;
-    
-    for (long i = 0; i < size; i++)
-    {
-        //add the element to the 4 last bits
-        //shift the value to make room for the next element
-        if(number!=0)number<<4;
-        number += translatedData[i];
-        
-        // update our buffer status
-        buffer +=4U;
-
-        // if the buffer is full or we are at the last element write the buffer on the binary output file.
-        if (buffer == 8U || i >= size-1U)
-        {
-            cda_write2binary(number,outfile);
-            number = 0;
-            buffer = 0;
-        }
-        
-    }
-    
-    fclose(outfile);
-}
-
 
 static void cda_write2binary(int i_number,FILE* outfile)
 {

@@ -17,13 +17,20 @@ typedef enum
     TESTING
 }functionality_t;
 
+typedef enum
+{
+    ONE_BIT=0,
+    TWO_BIT,
+    THREE_BIT,
+    FOUR_BIT
+}compressedSize_t;
 
 /*------------------------------*
         Method declaration 
 --------------------------------*/
 void cda_printHelp();
 
-void cda_getFileSize(char* file_p, long o_size);
+void cda_getFileSize(char* file_p, long* o_size);
 void cda_readFile(char* file_p, long i_size, BYTE* o_data_p);
 
 #endif

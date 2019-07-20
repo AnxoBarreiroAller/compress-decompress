@@ -25,24 +25,50 @@
 
         },
         {
-        "name": "run compress debug",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceRoot}/Debug/compress_decompress",
-        "args": ["-h"],
-        "stopAtEntry": false,
-        "cwd": "${workspaceFolder}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "gdb",
-        "setupCommands": [
-            {
-                "description": "Enable pretty-printing for gdb",
-                "text": "-enable-pretty-printing",
-                "ignoreFailures": true
-            }
-        ]
-
-    }
+            "name": "run compress debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/Debug/compress_decompress",
+            "args": ["-compress",
+                "-i",
+                "/home/anxo/compress-decompress/out.bin",
+                "-o",
+                "/home/anxo/compress-decompress/compressed.bin"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "run decompress debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/Debug/compress_decompress",
+            "args": ["-decompress",
+                "-i",
+                "/home/anxo/compress-decompress/compressed.bin",
+                "-o",
+                "/home/anxo/compress-decompress/decompressed.bin"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
     ]
 }

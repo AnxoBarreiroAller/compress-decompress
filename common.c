@@ -4,19 +4,19 @@
 #include <string.h>
 #include "compress-decompress.h"
 
-void cda_getFileSize(char* file_p, long o_size)
+void cda_getFileSize(char* file_p, long* o_size)
 {
    
     FILE *p;
     p = fopen(file_p,"rb");
     fseek (p, 0 , SEEK_END);
-    o_size = ftell (p) ;
+    *o_size = ftell (p) ;
     rewind (p);
 }
 
 void cda_readFile(char* file_p, long i_size, BYTE* o_data_p)
 {
-    FILE *logFile = fopen("/sd/PCE001.bin","rb");
+    FILE *logFile = fopen(file_p,"rb");
     if (!logFile)
     {  
         fprintf(stderr,"FAILED TO OPEN FILE\n"); 

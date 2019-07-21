@@ -32,9 +32,9 @@ Different options can be selected
 
 ./compress-decompress -h will promtp the help info
 
-HELP for Compress-Decompress program 
+     HELP for Compress-Decompress program 
  
-Program must be called as ./compress-decompress -OPTION -i PATH_TO_INPUT_FILE -o PATH_TO_INPUT_FILE 
+     Program must be called as ./compress-decompress -OPTION -i PATH_TO_INPUT_FILE -o PATH_TO_INPUT_FILE 
 
 	 -h / - help 		 Displays help/usage 
 	 -compress 		 Calls compression algorithm 

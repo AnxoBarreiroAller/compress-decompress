@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG  -rdynamic CMakeFiles/compress_decompress.dir/main.c.o CMakeFiles/compress_decompress.dir/compress.c.o CMakeFiles/compress_decompress.dir/decompress.c.o  -o compress_decompress 

@@ -76,10 +76,7 @@
             "request": "launch",
             "program": "${workspaceRoot}/Debug/compress_decompress",
             "args": ["-testing",
-                "2",
-                "-testingFolder",
-                "/home/anxo/compress-decompress/testing"
-
+                "9"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

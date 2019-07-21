@@ -174,7 +174,17 @@ void cda_testing(char* testNumber)
 
         //open files and compare them
         FILE* file1 = fopen(buffer1,"rb");
+        if (!file1)
+        {  
+            fprintf(stderr,"FAILED TO OPEN FILE\n"); 
+            exit(EXIT_FAILURE);
+        }
         FILE* file2 = fopen(buffer3,"rb");
+        if (!file2)
+        {  
+            fprintf(stderr,"FAILED TO OPEN FILE\n"); 
+            exit(EXIT_FAILURE);
+        }
         cda_compareBinary(file1, file2, i);
         
     }

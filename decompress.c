@@ -65,6 +65,11 @@ static void cda_bitDecompression(long compressedDataSize,BYTE* alphabetTable,uin
 {
     // open output file
     FILE *outfile =fopen(output,"wb");
+    if (!outfile)
+    {  
+        fprintf(stderr,"FAILED TO OPEN FILE\n"); 
+        exit(EXIT_FAILURE);
+    }
     //offset to properly read data
     uint8_t offset = alphabetTableSize +1U;
 

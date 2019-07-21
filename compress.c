@@ -118,6 +118,11 @@ static void cda_bitCompression(long size,BYTE* i_alphabetTable,uint8_t* alphabet
 {
     //open file an dwrite header
     FILE *outfile =fopen(outputData,"wb");
+    if (!outfile)
+    {  
+        fprintf(stderr,"FAILED TO OPEN FILE\n"); 
+        exit(EXIT_FAILURE);
+    }
     cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
     // local vars
     uint8_t buffer =0;

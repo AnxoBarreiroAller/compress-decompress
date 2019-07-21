@@ -13,9 +13,17 @@ void cda_getFileSize(char* file_p, long* o_size)
    
     FILE *p;
     p = fopen(file_p,"rb");
-    fseek (p, 0 , SEEK_END);
-    *o_size = ftell (p) ;
-    rewind (p);
+    if (!p)
+    {  
+        fprintf(stderr,"FAILED TO OPEN FILE\n"); 
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        fseek (p, 0 , SEEK_END);
+        *o_size = ftell (p) ;
+        rewind (p);
+    }
 }
 
 void cda_readFile(char* file_p, long i_size, BYTE* o_data_p)

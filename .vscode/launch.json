@@ -31,9 +31,9 @@
             "program": "${workspaceRoot}/Debug/compress_decompress",
             "args": ["-compress",
                 "-i",
-                "/home/anxo/compress-decompress/out.bin",
+                "/home/anxo/compress-decompress/out2.bin",
                 "-o",
-                "/home/anxo/compress-decompress/compressed.bin"],
+                "/home/anxo/compress-decompress/compressed2.bin"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -54,9 +54,33 @@
             "program": "${workspaceRoot}/Debug/compress_decompress",
             "args": ["-decompress",
                 "-i",
-                "/home/anxo/compress-decompress/compressed.bin",
+                "/home/anxo/compress-decompress/compressed2.bin",
                 "-o",
-                "/home/anxo/compress-decompress/decompressed.bin"],
+                "/home/anxo/compress-decompress/decompressed2.bin"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "run testing",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/Debug/compress_decompress",
+            "args": ["-testing",
+                "2",
+                "-testingFolder",
+                "/home/anxo/compress-decompress/testing"
+
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

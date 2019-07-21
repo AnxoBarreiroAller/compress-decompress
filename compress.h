@@ -1,3 +1,7 @@
+
+/* Compress decompress program
+    anxo barreiro aller <anxo.barreiro@gmail.com>
+ */
 #ifndef COMPRESS_H
 #define COMPRESS_H
 
@@ -103,6 +107,24 @@ static void cda_headerWrite(BYTE* i_alphabetTable, uint8_t* alphabetTableSize,  
 *  param [input]  outfile             output file.
 */
 static void cda_write2binary(int i_number,FILE* outfile);
+
+/*
+*  fn        cda_writeBuffer(long size, int* number, int* buffer,long i,FILE* outfile);
+*
+*  brief     writes buffer
+*
+*  param [input]  size     data size
+*
+*  param [input]  number    number to be wrtitten.
+*
+*  param [input]  buffer    buffer size.
+*
+*  param [input]  i         iteration.
+*
+*  param [input] outfile    output file
+*
+*/
+static void cda_writeBuffer(long size, int* number, uint8_t* buffer,long i,FILE* outfile);
 
 
 

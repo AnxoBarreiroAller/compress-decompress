@@ -1,3 +1,7 @@
+/* Compress decompress program
+    anxo barreiro aller <anxo.barreiro@gmail.com>
+ */
+
 #ifndef DECOMPRESS_H
 #define DECOMPRESS_H
 
@@ -7,7 +11,7 @@
 /*--------------------------------------------*
     Struct, Enums and Defines declaration 
 ----------------------------------------------*/
-static BYTE g_alphabetTable[MAX_ALPHABET_ELEMENTS];
+static BYTE g_alphabetTableDecompress[MAX_ALPHABET_ELEMENTS];
 
 /*------------------------------*
         Method declaration 
@@ -24,7 +28,7 @@ static BYTE g_alphabetTable[MAX_ALPHABET_ELEMENTS];
 */
 void cda_processDecompress(char *input, char *output);
 /*
-*  fn        cda_bitDecompression(long compressedDataSize,BYTE* alphabetTable,uint8_t alphabetTableSize,char* data,char* output, uint8_t biteCompressSize);
+*  fn        cda_bitDecompression(long compressedDataSize,BYTE* alphabetTable,uint8_t alphabetTableSize,BYTE* data,char* output, uint8_t biteCompressSize);
 *
 *  brief     Creates the decompressed file
 *
@@ -40,7 +44,7 @@ void cda_processDecompress(char *input, char *output);
 *
 *  param [input]  biteCompressSize      Size of the compression data.
 */
-static void cda_bitDecompression(long compressedDataSize,BYTE* alphabetTable,uint8_t alphabetTableSize,char* data,char* output, uint8_t biteCompressSize);
+static void cda_bitDecompression(long compressedDataSize,BYTE* alphabetTable,uint8_t alphabetTableSize,BYTE* data,char* output, uint8_t biteCompressSize);
 
 /*
 *  fn        cda_write2binary(int i_number,FILE* outfile);

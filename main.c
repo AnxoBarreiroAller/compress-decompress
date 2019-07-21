@@ -17,6 +17,7 @@ int main (int argc, char* argv[])
     functionality_t func=NONE;
     char* input;
     char* output;
+    char* testNumber;
 
     // Check if enough arguments where passed
     if(argc < 2U)
@@ -58,11 +59,8 @@ int main (int argc, char* argv[])
             }
             else
             {
-                input = argv[i+1U];
                 ++i;
             }
-            
-
         }
         else if (!strcmp(argv[i],"-o"))
         {
@@ -76,15 +74,30 @@ int main (int argc, char* argv[])
             }
             else
             {
-                output = argv[i+1U];
                 ++i;
             }
             
 
         }
+        else if(!strcmp(argv[i],"-testing"))
+        {
+            func = TESTING;
+            testNumber = argv[i+1U];
+            if(testNumber == NULL)
+            {
+                // throw error in case of missind data.
+                fprintf(stderr," Please Specify the number of tests to be perforrmed \n");
+                exit(EXIT_FAILURE);
+            }
+            else
+            {
+                ++i;
+            }
+            ++i;
+        }
         
     }
-
+    //Switch to select funtionality.
     switch (func)
     {
     case NONE:
@@ -94,18 +107,21 @@ int main (int argc, char* argv[])
     case COMPRESS:
         fprintf(stderr," Compression selected \n");
         cda_processCompress(input,output);
+        exit(EXIT_SUCCESS);
         break;
     case DECOMPRESS:
         fprintf(stderr," Decompression selected \n");
         cda_processDecompress(input,output);
+        exit(EXIT_SUCCESS);
         break;
      case ACCESS_COMPRESS:
         fprintf(stderr," Access compressed file feature not implemented yet selected \n");
         exit(EXIT_FAILURE);
         break;
      case TESTING:
-        fprintf(stderr," Testing feature not implemented yet selected \n");
-        exit(EXIT_FAILURE);
+        fprintf(stderr," Testing  selected \n");
+        cda_testing(testNumber);
+        exit(EXIT_SUCCESS);
         break;
     default:
         break;
@@ -126,9 +142,72 @@ void cda_printHelp()
     fprintf(stderr,"\t -decompress \t\t Calls decompression algorithm \n");
     fprintf(stderr,"\t -accescompress \t Calls Access compresed file algorithm \n");
     fprintf(stderr,"\t -i \t \t\t Path and name of the input file \n");
-    fprintf(stderr,"\t -o \t \t\t Path and name of the output file \n");
+    fprintf(stderr,"\t -testing \t\t Number of tests to be performed at testing folder (no need to specify location)\n");
+    
     
     
     
     exit(EXIT_FAILURE);
+}
+
+void cda_testing(char* testNumber)
+{
+    if((uint16_t)(*testNumber) > 64)
+    {
+        fprintf(stderr,"Exeeded the maximum number of test. Exiting \n");
+        exit(EXIT_FAILURE);
+    }
+
+    for(uint16_t i = 1; i <= (uint16_t)(*testNumber);++i)
+    {
+        // genrate the test input name
+        char buffer1[64]; // The filename buffer.
+        snprintf(buffer1, sizeof(char) * 64, "/home/anxo/compress-decompress/testing/out%i.bin", i);
+        char buffer2[64]; // The filename buffer.
+        snprintf(buffer2, sizeof(char) * 64, "/home/anxo/compress-decompress/testing/compressed%i.bin", i);
+        char buffer3[64]; // The filename buffer.
+        snprintf(buffer3, sizeof(char) * 64, "/home/anxo/compress-decompress/testing/decompressed%i.bin", i);
+        //process compression
+        cda_processCompress(buffer1,buffer2);
+        // process decompression
+        cda_processDecompress(buffer2,buffer3);
+
+        //open files and compare them
+        FILE* file1 = fopen(buffer1,"rb");
+        FILE* file2 = fopen(buffer3,"rb");
+        cda_compareBinary(file1, file2, i);
+        
+    }
+    exit(EXIT_SUCCESS);
+
+}
+
+void cda_compareBinary(FILE *file1, FILE *file2,uint16_t testNum)
+{
+    char char1, char2;
+    int equal = 0;
+
+    while (((char1 = fgetc(file1)) != EOF) &&((char2 = fgetc(file2)) != EOF))
+    {
+        if (char1 == char2)
+        {
+            equal = 1;
+            continue;
+        }
+        else
+        {
+            fseek(file1, -1, SEEK_CUR);
+            equal = 0;
+            break;
+        }
+    }
+
+    if (equal == 0)
+    {
+        printf("Files of test %u are not equal :  Divergence found at %ld\n",testNum, ftell(file1)+1);
+    }
+    else
+    {
+        printf("Files of test %u are equal\n ", testNum);
+    }
 }

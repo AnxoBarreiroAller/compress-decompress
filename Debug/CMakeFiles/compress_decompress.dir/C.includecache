@@ -6,6 +6,38 @@
 
 #IncludeRegexTransform: 
 
+/home/anxo/compress-decompress/common.c
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+string.h
+-
+compress-decompress.h
+/home/anxo/compress-decompress/compress-decompress.h
+
+/home/anxo/compress-decompress/compress-decompress.h
+
+/home/anxo/compress-decompress/compress.c
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+string.h
+-
+stdbool.h
+-
+math.h
+-
+compress.h
+/home/anxo/compress-decompress/compress.h
+
+/home/anxo/compress-decompress/compress.h
+compress-decompress.h
 /home/anxo/compress-decompress/compress-decompress.h
 
 /home/anxo/compress-decompress/decompress.c
@@ -23,6 +55,22 @@ decompress.h
 /home/anxo/compress-decompress/decompress.h
 stdio.h
 -
+compress-decompress.h
+/home/anxo/compress-decompress/compress-decompress.h
+
+/home/anxo/compress-decompress/main.c
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+string.h
+-
+compress.h
+/home/anxo/compress-decompress/compress.h
+decompress.h
+/home/anxo/compress-decompress/decompress.h
 compress-decompress.h
 /home/anxo/compress-decompress/compress-decompress.h
 

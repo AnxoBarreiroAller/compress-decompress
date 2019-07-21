@@ -1,3 +1,7 @@
+/* Compress decompress program
+    anxo barreiro aller <anxo.barreiro@gmail.com>
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -18,7 +22,7 @@ void cda_processCompress(char *input, char *output)
     // Get the total file size
     cda_getFileSize(input, &size);
 
-    
+    // allocate memory for the data array
     data= (BYTE*)malloc(size * sizeof(BYTE));
     
     translatedData= (uint8_t*)malloc(size * sizeof(uint8_t));
@@ -60,7 +64,6 @@ void cda_processCompress(char *input, char *output)
     // free malloced arrays
     free(data);
     free(translatedData);
-    exit(EXIT_SUCCESS);
 
 
 }
@@ -88,6 +91,7 @@ static void cda_createAlphabetTable(BYTE* i_data_p,long dataSize, BYTE* o_table,
 
         if(newItem)
         {
+            // add new elements to index
             o_table[*o_alphabetTableSize] = i_data_p[i];
             o_translatedData_p[i] = *o_alphabetTableSize; 
             ++ (*o_alphabetTableSize);
@@ -95,6 +99,7 @@ static void cda_createAlphabetTable(BYTE* i_data_p,long dataSize, BYTE* o_table,
         }
         else
         {
+            // translate data according to index
             o_translatedData_p[i] = item;
         }
     }
@@ -102,6 +107,7 @@ static void cda_createAlphabetTable(BYTE* i_data_p,long dataSize, BYTE* o_table,
 
 static void cda_errorMaxAlphElements(long num, long size)
 {
+    // create error for too many elements
     fprintf(stderr,"ERROR: Alphabet consist on more than 16 elemements");
     fprintf(stderr,"ERROR: Execution stopped at byte %ld of %ld total bytes",num,size);
     exit(EXIT_FAILURE);
@@ -110,89 +116,74 @@ static void cda_errorMaxAlphElements(long num, long size)
 
 static void cda_bitCompression(long size,BYTE* i_alphabetTable,uint8_t* alphabetTableSize, uint8_t *translatedData, char* outputData,uint8_t biteCompressSize)
 {
+    //open file an dwrite header
     FILE *outfile =fopen(outputData,"wb");
     cda_headerWrite( i_alphabetTable, alphabetTableSize,  outfile);
-    
+    // local vars
     uint8_t buffer =0;
     int number=0;
     uint16_t leftover = 0;
     uint8_t leftoverSize =0;
 
+    //go trough all data
     for (long i = 0; i < size; i++)
     {
+        //check if any data was left un assigned form previous byte.
         if(leftoverSize!=0)
         {
             uint8_t localSize =leftoverSize;
+            //go through leftover data
             for(uint8_t k =0; k<localSize;k++)
             {
-                if(leftover & 1)
+                if(leftoverSize ==0)
                 {
-                    
-                    if(number!=0)number = number<<1;
-                    number++;
-                    leftover = leftover >>1;
-                    leftoverSize--;
-                    buffer++;
-                    if(buffer == 8U)break;
+                    leftover = 0;
+                    continue;
                 }
-                else
+                if(buffer == 8U)continue;
+                // only move data if there is anything to move (prevent weird beahviours)
+                //push bit
+                if(number!=0)number = number<<1;
+                // is the las item is a 1 add it
+                if(leftover & 1)number++;
+                //pop bit
+                leftover = leftover >>1;
+                //reduce size
+                leftoverSize--;
+                // increment write buffer
+                buffer++;
+                if (buffer == 8U || i >= size-1U)
                 {
-                    leftover = leftover >>1;
-                    if(number!=0)number =number<<1;
-                    buffer++;
-                    leftoverSize--;
-                    if(buffer == 8U)break;
+                    cda_writeBuffer(size, &number,&buffer,i,outfile);
                 }
-                
             }
         }
-
+        // once leftover is depleted
+        // get a new item form the list.
         if(buffer < 8U)
         {
             uint8_t localValue = translatedData[i];
             for(uint8_t j=0; j <biteCompressSize;j++)
             {
-                
-                if(localValue & 1)
+                if(number!=0)number =number<<1;
+                if(localValue & 1)number++;
+                localValue = localValue >>1;
+                buffer++;
+                if(buffer == 8U)
                 {
-                    if(number!=0)number =number<<1;
-                    number++;
-                    localValue = localValue >>1;
-                    buffer++;
-                    if(buffer == 8U)
+                    if(j<biteCompressSize-1U)
                     {
-                        if(j<biteCompressSize-1U)
-                        {
-                            leftover = localValue;
-                            leftoverSize = (biteCompressSize-1U)-j;
-                        }
-                        break;
+                        leftover = localValue;
+                        leftoverSize = (biteCompressSize-1U)-j;
                     }
+                    break;
                 }
-                else
-                {
-                    localValue = localValue >>1;
-                    if(number!=0)number =number<<1;
-                    buffer++;
-                    if(buffer == 8U)
-                    {
-                        if(j<biteCompressSize-1U)
-                        {
-                            leftover = localValue;
-                            leftoverSize = (biteCompressSize-1U)-j;
-                        }
-                        break;
-                    }
-                }
-                
             }
         }
 
         if (buffer == 8U || i >= size-1U)
         {
-            cda_write2binary(number,outfile);
-            number = 0;
-            buffer = 0;
+            cda_writeBuffer(size, &number,&buffer,i,outfile);
         }
         
     }
@@ -201,10 +192,19 @@ static void cda_bitCompression(long size,BYTE* i_alphabetTable,uint8_t* alphabet
    
 }
 
+static void cda_writeBuffer(long size, int* number, uint8_t* buffer,long i,FILE* outfile)
+{
+// write to file
+        // ensure data is properly located
+        if(i >= size-1U && *buffer != 8U)*number = *number << (8U-*buffer);
+        cda_write2binary(*number,outfile);
+        *number = 0;
+        *buffer = 0;
+}
+
 static void cda_write2binary(int i_number,FILE* outfile)
 {
-    //translates the uint number to char
-  
+
     BYTE b = i_number & 0xFF;
     fwrite(&b, 1, 1,outfile);
 }

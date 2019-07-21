@@ -1,3 +1,7 @@
+/* Compress decompress program
+    anxo barreiro aller <anxo.barreiro@gmail.com>
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
